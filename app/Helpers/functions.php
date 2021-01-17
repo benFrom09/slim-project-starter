@@ -28,6 +28,22 @@ if (!function_exists('dd'))
     }
 }
 
+if(!function_exists('base_path')) {
+
+    function base_path(string $path = '') {
+        return dirname(__DIR__,2) . DIRECTORY_SEPARATOR . $path;
+    }
+}
+
+if(!function_exists('view_path')) {
+
+    function view_path(string $path = '') {
+        return base_path('views') . DIRECTORY_SEPARATOR . $path;
+    }
+}
+
+
+
 if(!function_exists('view')) {
     /**
      * view renderer
@@ -38,11 +54,13 @@ if(!function_exists('view')) {
      * @return Response
      */
     function view(Response $response, string $view,?array $vars = []):Response {
-
+        
         //load twig filesystem
-        $dir = dirname(dirname(__DIR__)) . '/views';
+        $dir = view_path();
         $loader = new Filesystemloader($dir);
-        $twig = new Environment($loader);
+        $twig = new Environment($loader,[
+            'cache' => base_path('cache')
+        ]);
 
         $view = str_replace('.', DIRECTORY_SEPARATOR,$view) . '.html.twig';
         $file = $dir . DIRECTORY_SEPARATOR . $view;
