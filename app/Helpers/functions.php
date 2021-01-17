@@ -51,7 +51,7 @@ if(!function_exists('view')) {
             $response->getBody()->write($twig->render($view,$vars));
             return $response;
         } else {
-            throw new Exception('VIEWRENDERERException: cannot find ' . $view);
+            throw new \Exception('VIEW_RENDERER_Exception: cannot find ' . $view);
         }
     }
 }
