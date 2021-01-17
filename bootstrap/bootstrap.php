@@ -1,20 +1,20 @@
 <?php
 
 use Slim\Factory\AppFactory;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
 
+//middlewares
 
-$app->addErrorMiddleware(true,true,true);
+$middlewares = require __DIR__ .'/../app/middlewares/middlewares.php';
+$middlewares($app);
 
-$app->get('/', function (Request $request, Response $response, $args) {
-    $response->getBody()->write('Hello slim');
-    return $response;
-});
+
+//APP ROUTES
+$routes = require __DIR__ . '/../app/routes/routes.php';
+$routes($app);
 
 $app->run();
 
