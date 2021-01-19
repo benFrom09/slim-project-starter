@@ -11,11 +11,11 @@ class Database
         $db = new Capsule();
         
         $db->addConnection([
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'database',
-            'username'  => 'root',
-            'password'  => 'password',
+            'driver'    => db_config('driver'),
+            'host'      => db_config('host_name'),
+            'database'  => db_config('db_name'),
+            'username'  => db_config('db_user'),
+            'password'  => db_config('db_password'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

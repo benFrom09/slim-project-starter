@@ -42,7 +42,27 @@ if(!function_exists('view_path')) {
     }
 }
 
+if(!function_exists('db_config')) {
+    function db_config(string $key) {
 
+        $dbConfig = require base_path('settings') . "/db_settings.php";
+            if(array_key_exists($key,$dbConfig)){
+                return $dbConfig[$key];
+            }
+            $value = array_key_exists("default",$dbConfig) ? $dbConfig["connections"][$dbConfig["default"]][$key] : null;
+            return $value;
+    }
+}
+
+if(!function_exists('make_email')) {
+    function make_email(string $filename,array $data = []) {
+        extract($data);
+        ob_start();
+        include (view_path('emails') . DIRECTORY_SEPARATOR . $filename . '.php');
+        return $content = ob_get_clean();
+        //return $content;
+    }
+}
 
 if(!function_exists('view')) {
     /**
